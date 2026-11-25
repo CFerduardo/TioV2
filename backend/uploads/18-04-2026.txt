@@ -1,0 +1,158 @@
+RPDA00200248,Camiseta P/Damas,1.03,6.9,16
+RPDA00301094,Blusa S/Mangas P/Damas,6.2,10.34,16
+RPDA00301103,Blusa S/Mangas P/Damas,6.78,10.34,16
+RPDA00600316,Pantalon P/Damas Tallas Grandes,5.17,12.93,16
+RPDA00600317,Pantalon P/Damas,7,12.93,16
+RPDA00900164,Overall Pantalon P/Damas,5.74,8.62,16
+RPDA00900165,Overall Pantalon P/Damas,5.4,8.62,16
+RPDA00900166,Conj Pantalon Corto C/Sueter S/Mangas P/Damas,2.07,4.31,16
+RPDA00900167,Overall Corto P/Damas,3.33,6.9,16
+RPDA00900168,Overall Pantalon P/Damas,4.48,10.34,16
+RPDA00900170,Overall Corto P/Damas,4.59,6.9,16
+RPDA01000095,FALDA SHORT DE DAMA EXCLUSIVE 2572,2.52,6.9,16
+RPDA01100161,SHORT CASUAL DE DAMA EXCLUSIVE 2564,6.2,12.93,16
+RPDA01600398,Vestido C/Tiras P/Damas,1.61,4.31,16
+RPDA01600429,Vestido C/Tiras P/Damas,2.53,6.9,16
+RPDA01600430,Vestido S/Mangas P/Damas,2.41,6.9,16
+RPDA01600431,Vestido S/Mangas P/Damas,2.53,6.9,16
+RPDA01700109,Conj 2 pz Pijama Pantalon Corto C/Sueter M/Corta P/Damas Tallas Grandes,5.51,8.62,16
+RPDA01700110,Conj 2 pz Pijama Camison C/Tiras + Bata M/Larga P/Damas,5.97,10.34,16
+RPDA01700111,Conj 2 pz Pijama Pantalon Corto C/Sueter M/Corta P/Damas Tallas Grandes,5.63,8.62,16
+RPDA01700112,Conj 2 pz Pijama Camison C/Tiras + Bata M/Larga P/Damas Tallas Grandes,5.97,10.34,16
+RPDA01700113,Conj 2 pz Pijama Pantalon Corto C/Sueter S/Mangas P/Damas,2.07,4.31,16
+RPDA01700114,Conj 2 pz Pijama Pantalon Corto C/Camiseta Cuello V P/Damas,2.07,4.31,16
+RPDA01700115,Conj 2 pz Pijama Pantalon Corto C/Sueter Atletico S/Mangas P/Damas Tallas Grandes,2.3,4.31,16
+RPDA05300454,Conj 2 pz Pantalon Torero C/Sueter S/Mangas P/Damas,2.18,8.62,16
+RPDA05300455,Conj 2 pz Pantalon Torero C/Sueter M/Corta P/Damas,2.76,8.62,16
+RPNA00200433,Sueter S/Mangas P/Bebe Niña,1.15,7.76,16
+RPNA00200438,Sueter M/Corta P/Bebe Niña,2.07,3.45,16
+RPNA00200440,Sueter M/Corta P/Niñas,3.1,5.17,16
+RPNA00200442,Sueter M/Corta P/Niñas,3.1,5.17,16
+RPNA00200443,Sueter M/Corta P/Niñas,3.1,6.03,16
+RPNA00200446,Sueter S/Mangas P/Bebe Niña,1.26,2.59,16
+RPNA00200447,Sueter S/Mangas P/Bebe Niña,1.15,2.59,16
+RPNA00200448,Sueter S/Mangas P/Bebe Niña,1.15,7.76,16
+RPNA00200449,Sueter M/Corta P/Bebe Niña,2.07,4.31,16
+RPNA00200450,Sueter M/Corta P/Bebe Niña,2.07,3.45,16
+RPNA00200451,Sueter M/Corta P/Bebe Niña,2.07,3.45,16
+RPNA00200452,Camiseta C/Cierre Cruzado P/Bebe Niña,1.03,2.59,16
+RPNA00200453,Camiseta C/Cierre Cruzado P/Bebe Niña,1.03,2.59,16
+RPNA00200454,FRANELA DE NINA JUVENIL MARY ANNE 2902,0,8.62,16
+RPNA00200455,Sueter M/Corta C/Cierre Cruzado P/Bebe Niña,1.15,2.59,16
+RPNA00200456,Sueter S/Mangas P/Bebe Niña,1.26,2.59,16
+RPNA00200457,Sueter M/Corta P/Bebe Niña,2.07,3.45,16
+RPNA00200458,Camiseta P/Bebe Niña,1.15,7.76,16
+RPNA00200459,Sueter M/Corta C/Cierre Cruzado P/Bebe Niña,1.15,2.59,16
+RPNA00200460,Sueter M/Larga P/Bebe Niña,2.07,3.45,16
+RPNA00200461,Sueter M/Larga P/Niñas,2.07,3.45,16
+RPNA00300207,Blusa S/Mangas P/Niñas,3.56,5.17,16
+RPNA00300208,Sueter M/Corta P/Niñas,3.1,5.17,16
+RPNA00300209,Sueter M/Cortita P/Niñas,3.1,5.17,16
+RPNA00300210,Sueter M/Cortita P/Niñas,3.1,5.17,16
+RPNA00300211,Sueter M/Corta P/Niñas,3.1,5.17,16
+RPNA00300212,Camiseta P/Niñas,4.82,8.62,16
+RPNA00300213,Camiseta P/Bebe Niña,2.76,5.17,16
+RPNA00300214,Sueter M/Corta P/Bebe Niña,1.61,3.45,16
+RPNA00300215,Sueter M/Corta P/Bebe Niña,2.07,3.45,16
+RPNA00300216,Blusa S/Mangas P/Niñas,3.56,5.17,16
+RPNA00300217,Blusa S/Mangas P/Niñas,3.1,5.17,16
+RPNA00300218,Sueter M/Corta P/Bebe Niña,1.38,2.59,16
+RPNA00300219,Sueter M/Corta P/Niñas,3.1,5.17,16
+RPNA00300220,Top Crop M/Corta P/Niñas,2.07,3.45,16
+RPNA00300221,Sueter M/Corta P/Niñas,3.1,5.17,16
+RPNA00300222,Sueter S/Mangas P/Niñas,3.1,5.17,16
+RPNA00300223,Sueter M/Corta P/Bebe Niña,2.99,5.17,16
+RPNA00300224,Sueter M/Corta P/Niñas,2.3,4.31,16
+RPNA00300225,Top Crop M/Corta P/Niñas,1.38,3.45,16
+RPNA00300226,Blusa S/Mangas P/Niñas,3.45,6.03,16
+RPNA00300227,Blusa S/Mangas P/Niñas,3.45,6.03,16
+RPNA00300228,Sueter S/Mangas P/Niñas,3.1,5.17,16
+RPNA00600066,Pantalon P/Niñas,5.05,8.62,16
+RPNA00600067,Pantalon P/Niñas,4.48,10.34,16
+RPNA00600068,Pantalon P/Niñas,5.17,10.34,16
+RPNA00600069,Pantalon P/Niñas,3.79,8.62,16
+RPNA00600070,Pantalon P/Niñas,4.82,10.34,16
+RPNA00600071,Pantalon P/Bebe Niña,5.51,8.62,16
+RPNA00600072,Pantalon P/Niñas,3.79,8.62,16
+RPNA00600073,Pantalon P/Bebe Niña,6.43,10.34,16
+RPNA00600074,Pantalon P/Niñas,4.13,8.62,16
+RPNA00600075,Pantalon P/Niñas,5.09,8.62,16
+RPNA00600076,Pantalon P/Niñas,7.58,12.93,16
+RPNA00600077,Pantalon P/Bebe Niña,6.43,10.34,16
+RPNA00600078,Pantalon P/Bebe Niña,4.13,8.62,16
+RPNA00800423,Jeans Corte Bota P/Niñas,8.27,12.93,16
+RPNA00800424,Jeans Basta Ancha P/Niñas,8.96,12.93,16
+RPNA00800425,Jeans Corte Recto P/Niñas,7.58,12.93,16
+RPNA00800426,Jeans Corte Bota P/Niñas,7.23,12.93,16
+RPNA00800427,Jeans Basta Ancha P/Niñas,8.96,12.93,16
+RPNA00800428,Jeans P/Bebe Niña,5.51,10.34,16
+RPNA00800429,Jeans Corte Bota P/Bebe Niña,6.43,10.34,16
+RPNA00800430,Jeans Corte Bota P/Niñas,7.23,12.93,16
+RPNA00800431,Jeans Corte Bota P/Bebe Niña,6.43,10.34,16
+RPNA00800432,PANTALON CARGO DE NINA JUVENIL EXCLUSIVE 2137,4.82,10.34,16
+RPNA00900037,Overall Pantalon P/Niñas,3.79,10.34,16
+RPNA00900038,BRAGA SHORT DE NINA EXCLUSIVE 9063,3.45,10.34,16
+RPNA01000039,Falda P/Niñas,2.76,6.9,16
+RPNA01000040,Falda Pantalon Deportivo P/Niñas,2.53,6.9,16
+RPNA01000041,Falda Pantalon P/Niñas,3.9,6.9,16
+RPNA01000042,Falda Pantalon Deportivo P/Niñas,2.3,6.9,16
+RPNA01000043,FALDA SHORT CASUAL DE NINA JUVENIL EXCLUSIVE 2599,2.52,6.9,16
+RPNA01000044,FALDA DE DAMA EXCLUSIVE 0031,6.2,10.34,16
+RPNA01100124,Pantalon Corto P/Niñas,4.13,6.9,16
+RPNA01100125,Pantalon Corto P/Niñas,5.17,7.76,16
+RPNA01100126,Pantalon Corto P/Niñas,5.05,7.76,16
+RPNA01100127,Bermuda Larga P/Bebe Niña,5.51,8.62,16
+RPNA01100128,Bermuda P/Niñas,7.12,10.34,16
+RPNA01100129,Pantalon Corto P/Niñas,3.79,6.9,16
+RPNA01100130,Pantalon Corto P/Niñas,5.28,7.76,16
+RPNA01100131,Pantalon Corto P/Niñas,5.51,7.76,16
+RPNA01100132,Pantalon Corto P/Niñas,3.67,6.9,16
+RPNA01100133,Pantalon Corto P/Niñas,3.67,6.9,16
+RPNA01100134,Pantalon Corto P/Niñas,5.28,7.76,16
+RPNA01100135,Pantalon Corto P/Niñas,3.79,6.9,16
+RPNA01100136,Pantalon Corto P/Niñas,4.13,6.9,16
+RPNA01100137,Bermuda Larga P/Bebe Niña,5.51,8.62,16
+RPNA01100138,Pantalon Corto P/Bebe Niña,1.03,1.72,16
+RPNA01100139,Pantalon Corto P/Bebe Niña,1.03,1.72,16
+RPNA01100140,Pantalon Corto C/Ruedo Doblado P/Bebe Niña,5.28,8.62,16
+RPNA01100141,Pantalon Corto P/Bebe Niña,1.15,2.59,16
+RPNA01100142,Pantalon Corto P/Niñas,3.79,6.9,16
+RPNA01100143,Bermuda P/Bebe Niña,5.51,8.62,16
+RPNA01100144,Pantalon Corto P/Niñas,3.9,6.9,16
+RPNA01100145,Pantalon Corto P/Niñas,3.79,6.9,16
+RPNA01100146,Pantalon Corto P/Niñas,3.79,6.9,16
+RPNA01100147,Pantalon Corto P/Bebe Niña,1.03,1.72,16
+RPNA01100148,Pantalon Corto P/Niñas,5.4,7.76,16
+RPNA01100149,SHORT CASUAL DE NINA JUVENIL EXCLUSIVE 2566,4.82,8.62,16
+RPNA01100150,Pantalon Corto P/Niñas,3.45,6.9,16
+RPNA01100151,SHORT CASUAL DE BEBE NINA EXCLUSIVE 2155,5.51,8.62,16
+RPNA01600247,Vestido S/Mangas P/Niñas,4.48,8.62,16
+RPNA01600248,Vestido P/Niñas,3.45,6.9,16
+RPNA01600249,Vestido P/Niñas,5.51,10.34,16
+RPNA01600250,Blusa S/Mangas P/Bebe Niña,3.67,6.03,16
+RPNA01600251,Vestido S/Mangas P/Niñas,4.36,8.62,16
+RPNA01600252,Vestido P/Niñas,3.79,8.62,16
+RPNA01600253,Overall Corto P/Niñas,3.45,8.62,16
+RPNA01600254,Vestido S/Mangas P/Niñas,4.59,8.62,16
+RPNA01600255,Vestido S/Mangas P/Niñas,4.48,8.62,16
+RPNA01700035,Conj 2 pz Pijama Pantalon C/Sueter M/Corta P/Niñas,4.13,8.62,16
+RPNA01700036,Conj 2 pz Pijama Pantalon Corto C/Sueter M/Corta P/Niñas,3.67,6.9,16
+RPNA01700037,Conj 2 pz Pijama Pantalon C/Sueter M/Corta P/Niñas,4.13,8.62,16
+RPNA03600045,Vestido de Bano Entero M/L P/Niñas,5.51,10.34,16
+RPNA03600046,Vestido de Bano Entero P/Niñas,4.48,10.34,16
+RPNA03600047,Conjunto de 2 pz Sueter P/Surf M/L C/Panty P/Niñas,5.86,10.34,16
+RPNA03600048,Vestido de Bano Entero P/Niñas,2.99,10.34,16
+RPNA03600049,Vestido de Bano Entero P/Niñas,3.45,10.34,16
+RPNA03600050,Vestido de Bano Entero P/Niñas,4.48,10.34,16
+RPNA03600051,Vestido de Bano Entero M/L P/Niñas,6.2,10.34,16
+RPNA03600052,Vestido de Bano 2 pz Bikini C/Panty P/Niñas,3.45,8.62,16
+RPNA03600053,TRAJE DE BANO DE BEBE NINA 2PZS 0895 RIK WIL,0,10.34,16
+RPNA03600054,TRAJE DE BANO DE BEBE NINA 2PZS 0879 RIK WIL,0,10.34,16
+RPNA03600055,Vestido de Bano Entero P/Niñas,3.67,10.34,16
+RPNA03600056,Vestido de Bano 2 pz Manga Larga C/Panty P/Niñas,4.13,8.62,16
+RPNA05300296,Conj 2 pz Falda C/Sueter S/Mangas P/Niñas,7.23,12.93,16
+RPNA05300297,Conj 2 pz Pantalon C/Camiseta P/Niñas,7.92,12.93,16
+RPNA05300299,CONJUNTO DE BEBE NINA FALDA 2PZS EXCLUSIVE 3850,2.07,6.9,16
+RPNA05300300,Conj 2 pz Leggings C/Sueter M/Corta P/Niñas,2.76,6.9,16
+RPNA05500059,Sueter M/Larga P/Bebe Niña,1.15,2.59,16
+RPNA05500060,Sueter M/Larga P/Bebe Niña,1.38,3.45,16

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Corporativo - TIO</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='css/icono.ico') }}" type="image/x-icon">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    
+    <script>
+        if (!localStorage.getItem('usuario')) { window.location.href = '/'; }
+    </script>
+
+    <style>
+        /* === MEJORAS DE ESTILOS CORPORATIVOS DINÁMICOS === */
+        /* Import tipografía moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+
+        :root {
+            /* Paleta Corporativa Mejorada */
+            --primary-dark: #0f2b4d;
+            --primary: #1e4a76;
+            --primary-light: #2c6e9e;
+            --accent: #10b981;
+            --accent-dark: #059669;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark {
+            --primary-dark: #0a1622;
+            --primary: #1e3a5f;
+            --primary-light: #2c5282;
+            --gray-50: #0f172a;
+            --gray-100: #1e293b;
+            --gray-200: #334155;
+            --gray-300: #475569;
+            --gray-800: #e2e8f0;
+            --gray-900: #f1f5f9;
+        }
+
+        .brand-logo img {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            transition: var(--transition);
+        }
+        body.dark .brand-logo img {
+            filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        /* Tarjetas de módulo con efecto flotante y borde animado */
+        .module-card {
+            background: var(--gray-100);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-lg);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .module-card:hover::before {
+            left: 100%;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: var(--transition);
+        }
+
+        .module-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        /* Botones primarios con gradiente */
+        .primary-download-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .primary-download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            filter: brightness(1.05);
+        }
+
+        /* Panel de filtros tipo glassmorphism */
+        .panel-card {
+            background: var(--gray-100);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: var(--shadow-xl);
+            padding: 2rem;
+        }
+
+        .modern-select, input[type="date"] {
+            background: var(--gray-200);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .modern-select:focus, input[type="date"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+            outline: none;
+        }
+
+        /* Tablas mejoradas */
+        .table-results {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        table th {
+            background: linear-gradient(135deg, var(--gray-200), var(--gray-100));
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+        }
+
+        table tr {
+            transition: var(--transition);
+        }
+
+        table tr:hover td {
+            background: rgba(16, 185, 129, 0.05);
+        }
+        
+        /* Loader con efecto pulse */
+        .spinner {
+            border-width: 4px;
+            border-color: rgba(255,255,255,0.2);
+            border-top-color: var(--accent);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animación de entrada para tarjetas */
+        .module-card {
+            animation: fadeInUp 0.4s ease-out backwards;
+            animation-delay: calc(var(--order) * 0.05s);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            .main-wrapper {
+                padding: 1rem;
+            }
+            .module-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            .panel-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-body dark">
+
+    <div id="loader-overlay" style="display: none; z-index: 1000;">
+        <div class="spinner"></div>
+        <h3 id="loader-text">Procesando datos...</h3>
+        <p id="loader-subtext">Conectando con el servidor central SQL</p>
+    </div>
+
+    <div class="main-wrapper">
+        <header class="main-header">
+            <div class="header-left">
+                <div class="brand-logo">
+                    <img src="{{ url_for('static', filename='css/logo.png') }}" alt="Logo">
+                </div>
+                <div class="header-titles">
+                    <h1>Panel de Control</h1>
+                    <p id="user-info">Cargando usuario...</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle-btn" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                    <span id="theme-text">Modo Oscuro</span>
+                </button>
+                <button class="logout-btn-alt" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <main id="menu-principal" class="modules-container">
+            <div class="module-grid">
+                <button id="btn-yaguara" class="module-card" onclick="mostrarFiltrosSimple('yaguara')" style="--order: 1">
+                    <div class="card-icon"><i class="fas fa-warehouse"></i></div>
+                    <span class="card-label">Recep. Yaguara</span>
+                </button>
+                <button id="btn-tiendas" class="module-card" onclick="mostrarFiltrosSimple('tiendas')" style="--order: 2">
+                    <div class="card-icon"><i class="fas fa-store-alt"></i></div>
+                    <span class="card-label">Recep. Tiendas</span>
+                </button>
+                <button id="btn-inventario" class="module-card" onclick="irAMenuSedes('inventario')" style="--order: 3">
+                    <div class="card-icon"><i class="fas fa-boxes-stacked"></i></div>
+                    <span class="card-label">Inventario Tienda</span>
+                </button>
+                <button id="btn-reposicion" class="module-card" onclick="irAMenuSedes('reposicion')" style="--order: 4">
+                    <div class="card-icon"><i class="fas fa-sync-alt"></i></div>
+                    <span class="card-label">Reposición Tienda</span>
+                </button>
+                <button id="btn-ventaspos" class="module-card" onclick="irAMenuSedes('ventaspos')" style="--order: 5">
+                    <div class="card-icon"><i class="fas fa-cash-register"></i></div>
+                    <span class="card-label">Ventas POS</span>
+                </button>
+                <button id="btn-detalladas" class="module-card" onclick="irAMenuSedes('detalladas')" style="--order: 6">
+                    <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+                    <span class="card-label">Ventas Detalladas</span>
+                </button>
+                <button id="btn-cashea" class="module-card" onclick="irAMenuSedes('cashea')" style="--order: 7">
+                    <div class="card-icon"><i class="fas fa-credit-card"></i></div>
+                    <span class="card-label">Cashea</span>
+                </button>
+                <button id="btn-descarga-prod" class="module-card" onclick="mostrarInterfazDescarga()" style="--order: 8">
+                    <div class="card-icon"><i class="fas fa-file-download"></i></div>
+                    <span class="card-label">Descargar Producto</span>
+                </button>
+                <button id="btn-costos" class="module-card" onclick="mostrarInterfazCostos()" style="--order: 9">
+                    <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <span class="card-label">Costos</span>
+                </button>
+                <button id="btn-reposicion_compras" class="module-card" onclick="irAMenuSedes('reposicion_compras')" style="--order: 10">
+                    <div class="card-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <span class="card-label">Reposición Compras</span>
+                </button>
+                <button id="btn-cierres" class="module-card" onclick="mostrarFiltrosSimple('cierres')" style="--order: 11">
+                <!-- <button class="module-card disabled-card" style="--order: 11"> -->
+                    <div class="card-icon"><i class="fas fa-history"></i></div>
+                    <span class="card-label">Cierres POS</span>
+                </button>
+
+                <button class="module-card disabled-card" style="--order: 12">
+                    <div class="card-icon"><i class="fas fa-barcode"></i></div>
+                    <span class="card-label">Codificación</span>
+                </button>
+                <button class="module-card disabled-card" style="--order: 13">
+                    <div class="card-icon"><i class="fas fa-tag"></i></div>
+                    <span class="card-label">Etiquetado</span>
+                </button>
+            </div>
+        </main>
+
+        <section id="interfaz-filtros" class="config-panel" style="display: none;">
+            <div class="panel-card">
+                <div class="panel-header">
+                    <button class="back-link" onclick="atrasDesdeFiltros()"><i class="fas fa-arrow-left"></i> Volver al Menú</button>
+                    <h2 id="txt-titulo-modulo">Configuración de Reporte</h2>
+                    <p id="txt-sede-activa" class="status-badge"></p>
+                </div>
+
+                <div class="panel-body">
+                    <div id="wrapper-sede" class="input-group-alt">
+                        <label>Seleccionar Sede / Sucursal</label>
+                        <select id="container-sedes" class="modern-select">
+                            </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group-alt">
+                            <label>Fecha de Inicio</label>
+                            <input type="date" id="fecha-inicio">
+                        </div>
+                        <div class="input-group-alt">
+                            <label>Fecha de Fin</label>
+                            <input type="date" id="fecha-fin">
+                        </div>
+                    </div>
+
+                    <div id="box-moneda" class="input-group-alt" style="display: none;">
+                        <label>Moneda del Reporte</label>
+                        <select id="select-moneda" class="modern-select">
+                            <option value="usd">Dólares (USD)</option>
+                            <option value="ves">Bolívares (VES)</option>
+                        </select>
+                    </div>
+
+                    <button id="btn-descargar" class="primary-download-btn">
+                        GENERAR REPORTE <i class="fas fa-file-excel"></i>
+                    </button>
+
+                    <button id="btn-descargar-consolidado" class="primary-download-btn" style="display: none; background: #2c6e9e; margin-top: 10px;">
+                        GENERAR CONSOLIDADO <i class="fas fa-layer-group"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="contenedor-tabla-cashea" class="table-results" style="display: none;">
+                <h3>Resultados de Operaciones</h3>
+                <div class="table-responsive">
+                    <table id="tabla-datos-cashea">
+                        <thead id="thead-cashea"></thead>
+                        <tbody id="tbody-cashea"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="interfaz-descarga-productos" class="config-panel" style="display: none;">
+            <div class="panel-card">
+                <div class="panel-header">
+                    <button class="back-link" onclick="regresarAlMenu()"><i class="fas fa-arrow-left"></i> Volver al Menú</button>
+                    <h2>📥 Descargar Catálogo</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="upload-zone" style="cursor: pointer;">
+                        <input type="file" id="input-file-txt" accept=".txt" hidden onchange="procesarArchivoTxt(this)">
+                        <label for="input-file-txt" class="upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Subir archivo .txt con códigos</p>
+                        </label>
+                    </div>
+
+                    <!-- ✅ TABLA DE PREVISUALIZACIÓN (AGREGADA) -->
+                    <div style="margin-top: 20px; max-height: 350px; overflow-y: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                            <thead id="thead-productos"></thead>
+                            <tbody id="tbody-productos"></tbody>
+                        </table>
+                    </div>
+
+                    <!-- ✅ BOTÓN DE DESCARGA CON onclick CORREGIDO -->
+                    <button id="btn-excel-imagenes" class="primary-download-btn" style="display: none; background: #10b981;" onclick="downloadExcel()">
+                        DESCARGAR EXCEL CON IMÁGENES <i class="fas fa-images"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="interfaz-costos" class="config-panel" style="display: none;">
+            <div class="panel-card">
+                <div class="panel-header">
+                    <button class="back-link" onclick="regresarAlMenu()"><i class="fas fa-arrow-left"></i> Volver al Menú</button>
+                    <h2>💰 Actualización Masiva de Precios</h2>
+                    <p class="status-badge">Sincronización: CENTRAL e IMPORTADORA</p>
+                </div>
+
+                <div class="panel-body" style="cursor: pointer; text-align: center; margin-top: 15px;">
+                    <div id="drop-zone-costos" class="upload-zone" onclick="document.getElementById('file-input-costos').click()">
+                        <i class="fas fa-file-invoice-dollar" style="font-size: 3rem; color: var(--accent);"></i>
+                        <p>Arrastra tu archivo <b>.txt</b> aquí o haz clic para subir</p>
+                        <input type="file" id="file-input-costos" accept=".txt" hidden>
+                    </div>
+
+                    <div id="analysis-section" style="display: none; margin-top: 2rem;">
+                        <div class="module-grid" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); margin-bottom: 1.5rem;">
+                            <div class="stat-card-mini">
+                                <h3 id="count-ready" style="color: var(--accent);">0</h3>
+                                <span>Listos</span>
+                            </div>
+                            <div class="stat-card-mini">
+                                <h3 id="count-promo" style="color: #f1c40f;">0</h3>
+                                <span>En Promo</span>
+                            </div>
+                            <div class="stat-card-mini">
+                                <h3 id="count-loss" style="color: #e74c3c;">0</h3>
+                                <span>A Pérdida</span>
+                            </div>
+                            <div class="stat-card-mini">
+                                <h3 id="count-notfound" style="color: #95a5a6;">0</h3>
+                                <span>No Encontrados</span>
+                            </div>
+                        </div>
+
+                        <div id="alerts-container-costos" style="margin-bottom: 1.5rem;"></div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button id="btn-execute-costos" class="primary-download-btn" style="flex: 2;" disabled>
+                                PROCESAR ACTUALIZACIÓN <i class="fas fa-sync"></i>
+                            </button>
+                            <button class="primary-download-btn" style="flex: 1; background: var(--gray-300); color: var(--gray-900);" onclick="location.reload()">
+                                CANCELAR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/costos.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <script>
+        // Esta función "intercepta" la lógica original de crear tarjetas de sedes
+        // y las convierte en opciones de un select.
+        const originalIrAMenuSedes = window.irAMenuSedes;
+        window.irAMenuSedes = function(tipo) {
+            moduloActual = tipo;
+            ocultarTodo();
+            
+            const interfaz = document.getElementById('interfaz-filtros');
+            const wrapperSede = document.getElementById('wrapper-sede');
+            const selectSedes = document.getElementById('container-sedes');
+            const boxMoneda = document.getElementById('box-moneda');
+            const titulo = document.getElementById('txt-titulo-modulo');
+            const btn = document.getElementById('btn-descargar');
+            const btnConsolidado = document.getElementById('btn-descargar-consolidado');
+
+            interfaz.style.display = 'block';
+            btnConsolidado.style.display = 'none';
+
+            // Lógica específica para Ventas POS: Ocultar selector de sedes
+            if (tipo === 'ventaspos') {
+                sedeActual = 'TODAS'; 
+                wrapperSede.style.display = 'none';
+                document.getElementById('txt-sede-activa').innerText = 'REPORTE GLOBAL (TODAS LAS SEDES)';
+            } else {
+                wrapperSede.style.display = 'block';
+                selectSedes.innerHTML = '<option value="" disabled selected>Seleccione una sede...</option>';
+                
+                let sedes = [...LISTA_SEDES];
+                if (['inventario', 'reposicion', 'reposicion_compras'].includes(tipo)) sedes.push('IMPORTADORA');
+
+                sedes.sort().forEach(sede => {
+                    const opt = document.createElement('option');
+                    opt.value = sede;
+                    opt.innerText = sede;
+                    selectSedes.appendChild(opt);
+                });
+
+                selectSedes.onchange = (e) => seleccionarSede(e.target.value);
+            }
+
+            if (tipo === 'reposicion_compras') {
+                titulo.innerText = "🛒 Reposición para Compras";
+                btn.innerText = "DESCARGAR DETALLADO";
+                btnConsolidado.innerText = "DESCARGAR CONSOLIDADO";
+                btnConsolidado.style.display = 'block';
+                btnConsolidado.onclick = window.procesarDescargaConsolidada;
+            } else if (tipo === 'cashea') {
+                btn.innerText = "VISUALIZAR CASHEA";
+                btn.onclick = window.procesarConsultaCashea;
+            } else {
+                btn.innerText = (tipo === 'ventaspos') ? "GENERAR REPORTE GLOBAL" : "DESCARGAR EXCEL";
+                btn.onclick = window.procesarDescarga;
+            }
+
+            // Configuración de títulos y botones
+            const titulos = {
+                'inventario': '📋 Inventario de Tienda',
+                'reposicion': '🔄 Sugerido de Reposición',
+                'ventaspos': '📈 Efectividad Ventas POS - Consolidado',
+                'detalladas': '📊 Ventas Detalladas',
+                'cashea': '💳 Consulta Movimientos Cashea',
+                'cierres': '🧾 Cierres POS Consolidado',
+                'reposicion_compras': "🛒 Reposición para Compras"
+            };
+            
+            titulo.innerText = titulos[tipo] || "Reporte";
+            boxMoneda.style.display = (['ventaspos', 'detalladas'].includes(tipo)) ? 'block' : 'none';
+    
+        };
+
+        const originalMostrarFiltrosSimple = window.mostrarFiltrosSimple;
+        window.mostrarFiltrosSimple = function(tipo) {
+            originalMostrarFiltrosSimple(tipo);
+            document.getElementById('wrapper-sede').style.display = 'none';
+        };
+    </script>
+</body>
+</html>

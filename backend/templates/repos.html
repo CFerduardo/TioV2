@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard · Reposición</title>
+  <!-- Tailwind + Font Awesome + Fuente -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .modal-overlay {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+    .store-card {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid rgba(203, 213, 225, 0.4);
+    }
+    .store-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.02);
+      border-color: #94a3b8;
+    }
+    .order-item-enter {
+      animation: fadeSlide 0.2s ease;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateX(10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 min-h-screen p-5 md:p-7">
+
+  <div class="max-w-[1600px] mx-auto">
+    <!-- Encabezado mejorado con contenedor, sombra y mayor atractivo visual -->
+    <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-white/30 p-3 mb-5 transition-all duration-200 hover:shadow-xl">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <!-- Título y subtítulo -->
+        <div>
+          <h1 class="text-3xl font-bold text-slate-800 flex items-center gap-3">
+            <i class="fas fa-boxes text-indigo-500 bg-indigo-100 p-2 rounded-xl shadow-sm"></i> 
+            <span>Reposición · <span class="text-indigo-600">Centralizada</span></span>
+          </h1>
+          <!-- <p class="text-slate-500 mt-1 flex items-center gap-2 text-sm">
+            <i class="fas fa-store text-slate-400"></i>
+            Gestión de despachos y pedidos por tienda
+          </p> -->
+        </div>
+        
+        <!-- Badge de fecha y estado -->
+        <div class="flex items-center gap-3">
+          <!-- Fecha mejorada -->
+          <div class="bg-white/80 px-4 py-2 rounded-xl shadow-sm border border-slate-200/80 flex items-center gap-2">
+            <i class="far fa-calendar-alt text-indigo-400"></i>
+            <span class="text-sm font-medium text-slate-600">
+              <span class="font-semibold text-slate-700">Hoy,</span> 
+              13 de abril de 2026
+            </span>
+          </div>
+          <!-- Indicador de sincronización o estado (opcional, añade dinamismo) -->
+          <div class="bg-emerald-50 px-3 py-2 rounded-xl shadow-sm border border-emerald-100 flex items-center gap-2">
+            <i class="fas fa-sync-alt text-emerald-500 text-xs"></i>
+            <span class="text-xs font-medium text-emerald-700">Actualizado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETAS DE DESPACHOS (click para detalle) - 4 en una línea -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+      <!-- Tarjeta 1: Pedidos Solicitados -->
+      <div class="glass-card rounded-2xl p-3 shadow-md border border-white/40 cursor-pointer hover:shadow-lg transition" id="cardDespachosTotal">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Pedidos Solicitados</p>
+            <p class="text-4xl font-bold text-slate-800 mt-1" id="totalDespachos">24</p>
+            <p class="text-xs text-emerald-600 mt-2 flex items-center"><i class="fas fa-truck mr-1"></i> 8 en ruta</p>
+          </div>
+          <div class="h-12 w-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-700">
+            <i class="fas fa-store text-xl"></i>
+          </div>
+        </div>
+        <div class="mt-3 text-sm text-indigo-600 flex items-center gap-1">
+          <i class="fas fa-mouse-pointer"></i> Click para ver detalle
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Pedidos en Proceso -->
+      <div class="glass-card rounded-2xl p-3 shadow-md border border-white/40 cursor-pointer hover:shadow-lg transition" id="cardTiendasDespacho">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Pedidos en Proceso</p>
+            <p class="text-4xl font-bold text-slate-800 mt-1" id="tiendasConDespacho">12</p>
+            <p class="text-xs text-amber-600 mt-2"><i class="fas fa-store-alt mr-1"></i> 25 total activas</p>
+          </div>
+          <div class="h-12 w-12 bg-amber-100 rounded-xl flex items-center justify-center text-amber-700">           
+            <i class="fas fa-dolly text-xl"></i>
+          </div>
+        </div>
+        <div class="mt-3 text-sm text-indigo-600 flex items-center gap-1">
+          <i class="fas fa-mouse-pointer"></i> Ver distribución
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Pedidos Despachados -->
+      <div class="glass-card rounded-2xl p-3 shadow-md border border-white/40 cursor-pointer hover:shadow-lg transition" id="cardDepartamentos">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Pedidos Despachados</p>
+            <p class="text-4xl font-bold text-slate-800 mt-1" id="totalDespachados">3</p>
+            <p class="text-xs text-emerald-600 mt-2 flex items-center"><i class="fas fa-truck mr-1"></i> Entregados</p>
+          </div>
+          <div class="h-12 w-12 bg-sky-100 rounded-xl flex items-center justify-center text-sky-700">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+        </div>
+        <div class="mt-3 text-sm text-indigo-600 flex items-center gap-1">
+          <i class="fas fa-mouse-pointer"></i> Click para detalle
+        </div>
+      </div>
+
+      <!-- Tarjeta 4: Conciliación de Solpes (nuevo modal) -->
+      <div class="glass-card rounded-2xl p-3 shadow-md border border-white/40 cursor-pointer hover:shadow-lg transition" id="cardConciliacion">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Conciliación de Solpes</p>
+            <p class="text-4xl font-bold text-slate-800 mt-1" id="conciliacionResumen">12/4</p>
+            <p class="text-xs text-amber-600 mt-2"><i class="fas fa-chart-line mr-1"></i> Diferencias detectadas</p>
+          </div>
+          <div class="h-12 w-12 bg-rose-100 rounded-xl flex items-center justify-center text-rose-700">           
+            <i class="fas fa-balance-scale text-xl"></i>
+          </div>
+        </div>
+        <div class="mt-3 text-sm text-indigo-600 flex items-center gap-1">
+          <i class="fas fa-mouse-pointer"></i> Ver diferencias
+        </div>
+      </div>
+    </div>
+
+    <!-- GRILLA DE 25 TIENDAS -->
+    <h2 class="text-xl font-semibold text-slate-700 mb-3 flex items-center gap-2"><i class="fas fa-map-pin text-indigo-500"></i> Tiendas · Selecciona para hacer pedido</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4" id="storeGrid">
+      <!-- Renderizado con JS -->
+    </div>
+  </div>
+
+  <!-- MODAL DE PEDIDO (dinámico por tienda) -->
+  <div id="orderModal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-overlay transition-opacity">
+    <div class="bg-white/95 backdrop-blur-md w-[95%] max-w-6xl h-[90vh] rounded-3xl shadow-2xl border border-white/40 flex flex-col overflow-hidden">
+      <!-- Header modal -->
+      <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-indigo-50 to-white">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <i class="fas fa-cart-plus text-indigo-600"></i> 
+            Pedido · <span id="modalStoreName">BABILON</span> 
+            <span id="modalStoreCode" class="text-base font-normal text-slate-500 ml-2">(0203)</span>
+          </h2>
+          <p class="text-sm text-slate-500 mt-0.5"><span id="modalStoreM2">320 m²</span> · stock tienda vs almacén principal</p>
+        </div>
+        <button id="closeModalBtn" class="h-10 w-10 rounded-full bg-white/80 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition shadow-sm"><i class="fas fa-times text-xl"></i></button>
+      </div>
+
+      <!-- Cuerpo modal: izquierda (búsqueda+tabla) | derecha (solicitud) -->
+      <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+        <!-- LADO IZQUIERDO: búsqueda y productos -->
+        <div class="w-full md:w-2/3 p-5 overflow-y-auto border-r border-slate-200">
+          <div class="mb-4">
+            <div class="relative">
+              <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input type="text" id="searchProductInput" placeholder="Buscar por código o descripción..." 
+                     class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-white/90 shadow-sm focus:ring-2 focus:ring-indigo-300 outline-none">
+            </div>
+          </div>
+          
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/80">
+            <table class="min-w-full text-sm">
+              <thead class="bg-slate-100/80 text-slate-600 text-xs uppercase">
+                <tr>
+                  <th class="px-4 py-3 text-left">Código</th>
+                  <th class="px-4 py-3 text-left">Descripción</th>
+                  <th class="px-4 py-3 text-right">Stock Tienda</th>
+                  <th class="px-4 py-3 text-right">Stock Principal</th>
+                  <th class="px-4 py-3 text-center">Cant.</th>
+                  <th class="px-4 py-3"></th>
+                </tr>
+              </thead>
+              <tbody id="productTableBody" class="divide-y divide-slate-100">
+                <!-- dinámico -->
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs text-slate-400 mt-2 flex items-center"><i class="fas fa-info-circle mr-1"></i> Stock tienda es específico para esta sucursal</p>
+        </div>
+
+        <!-- LADO DERECHO: resumen de pedido (pequeño) -->
+        <div class="w-full md:w-1/3 p-5 bg-slate-50/70 flex flex-col">
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fas fa-shopping-basket text-indigo-600"></i>
+            <h3 class="font-semibold text-slate-700">Solicitud actual</h3>
+            <span id="orderItemCount" class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full ml-auto">0</span>
+          </div>
+          
+          <div class="flex-1 overflow-y-auto pr-1 space-y-2 mb-4" id="orderItemsContainer">
+            <div class="text-center text-slate-400 text-sm py-8" id="emptyOrderMsg">
+              <i class="fas fa-box-open text-3xl mb-2 opacity-50"></i>
+              <p>Aún no hay productos</p>
+              <p class="text-xs">Agrega desde la izquierda</p>
+            </div>
+          </div>
+
+          <div class="border-t border-slate-200 pt-4">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-slate-600">Total artículos:</span>
+              <span class="font-medium" id="orderTotalItems">0</span>
+            </div>
+            <button id="submitOrderBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+              <i class="fas fa-paper-plane"></i> Solicitar pedido
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE DETALLE DE PEDIDOS (solicitados, proceso, despachados) -->
+  <div id="detalleModal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-overlay transition-opacity">
+    <div class="bg-white/95 backdrop-blur-md w-[95%] max-w-4xl rounded-3xl shadow-2xl border border-white/40 flex flex-col overflow-hidden">
+      <!-- Header -->
+      <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-indigo-50 to-white">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <i class="fas fa-clipboard-list text-indigo-600"></i>
+            <span id="detalleModalTitulo">Pedidos Solicitados</span>
+          </h2>
+        </div>
+        <button id="cerrarDetalleModalBtn" class="h-10 w-10 rounded-full bg-white/80 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition shadow-sm">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <!-- Cuerpo: tabla -->
+      <div class="p-5 overflow-y-auto">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/80">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-100/80 text-slate-600 text-xs uppercase">
+              <tr>
+                <th class="px-4 py-3 text-left">Tienda</th>
+                <th class="px-4 py-3 text-left">N° Solpes</th>
+                <th class="px-4 py-3 text-right">Bultos</th>
+                <th class="px-4 py-3 text-right">Unidades</th>
+              </tr>
+            </thead>
+            <tbody id="detalleTablaBody" class="divide-y divide-slate-100">
+              <!-- filas dinámicas -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Footer -->
+      <div class="p-4 border-t border-slate-200 bg-slate-50/50 flex justify-end">
+        <button id="cerrarDetalleModalFooterBtn" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 rounded-xl text-slate-700 transition">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONCILIACIÓN DE SOLPES (diferencias) -->
+  <div id="conciliacionModal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-overlay transition-opacity">
+    <div class="bg-white/95 backdrop-blur-md w-[95%] max-w-5xl rounded-3xl shadow-2xl border border-white/40 flex flex-col overflow-hidden">
+      <!-- Header -->
+      <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-rose-50 to-white">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <i class="fas fa-balance-scale text-rose-600"></i>
+            <span>Conciliación de Solicitudes (Solpes)</span>
+          </h2>
+          <p class="text-sm text-slate-500 mt-0.5">Comparativa entre lo solicitado por tienda vs lo recibido en almacén</p>
+        </div>
+        <button id="cerrarConciliacionBtn" class="h-10 w-10 rounded-full bg-white/80 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition shadow-sm">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Cuerpo: tabla de diferencias -->
+      <div class="p-5 overflow-y-auto max-h-[70vh]">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white/80">
+          <table class="min-w-full text-sm">
+            <thead class="bg-slate-100/80 text-slate-600 text-xs uppercase">
+              <tr>
+                <th class="px-4 py-3 text-left">Tienda</th>
+                <th class="px-4 py-3 text-left">N° Solpe</th>
+                <th class="px-4 py-3 text-right">Bultos Solicitados</th>
+                <th class="px-4 py-3 text-right">Bultos Enviados</th>
+                <th class="px-4 py-3 text-center">Diferencia</th>
+                <th class="px-4 py-3 text-left">Estado</th>
+              </tr>
+            </thead>
+            <tbody id="conciliacionTablaBody" class="divide-y divide-slate-100">
+              <!-- Datos dinámicos -->
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-slate-400 mt-3 flex items-center gap-1"><i class="fas fa-info-circle"></i> Diferencia negativa = faltante; positiva = sobrante.</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-4 border-t border-slate-200 bg-slate-50/50 flex justify-end">
+        <button id="cerrarConciliacionFooterBtn" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 rounded-xl text-slate-700 transition">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      'use strict';
+
+      // ---------- DATOS DE TIENDAS ----------
+      const STORES = {
+        '0203': 'BABILON', '0301': 'BARALT', '0202': 'CABIMAS', '0205': 'CABUDARE', '0501': 'CAGUA',
+        '0207': 'CATIA', '0201': 'CRUZ VERDE', '0204': 'GUANARE', '0103': 'GUACARA', '0101': 'KAPITANA',
+        '0302': 'MATURIN', '0401': 'PROPATRIA', '0402': 'UPATA', '0102': 'VALENCIA', '0206': 'VALERA',
+        '0104': 'MARACAY', '0208': 'TIGRE', '0209': 'MARACAIBO', '0210': 'BOLIVAR', '0211': 'CARORA',
+        '0212': 'ANACO', '0213': 'VIGIA', '0214': 'CUMANA', '0215': 'SAN FERNANDO', '0216': 'VALLE PASCUA'
+      };
+
+      // Metros cuadrados estáticos (aleatorio controlado)
+      const M2_MAP = {
+        '0203':210,'0301':185,'0202':340,'0205':275,'0501':160,'0207':290,'0201':310,'0204':195,
+        '0103':225,'0101':380,'0302':260,'0401':420,'0402':175,'0102':300,'0206':200,'0104':350,
+        '0208':240,'0209':410,'0210':155,'0211':190,'0212':215,'0213':280,'0214':230,'0215':330,'0216':205
+      };
+
+      // ---------- DATOS DE PRODUCTOS (catálogo) ----------
+      const PRODUCTS = [
+        { code: 'P100', desc: 'Smart TV 43"', mainStock: 45 },
+        { code: 'P101', desc: 'Lavadora 10kg', mainStock: 22 },
+        { code: 'P102', desc: 'Microondas digital', mainStock: 38 },
+        { code: 'P103', desc: 'Aspiradora ciclónica', mainStock: 17 },
+        { code: 'P104', desc: 'Cafetera espresso', mainStock: 53 },
+        { code: 'P105', desc: 'Juego de sábanas', mainStock: 120 },
+        { code: 'P106', desc: 'Ventilador de torre', mainStock: 31 },
+        { code: 'P107', desc: 'Plancha a vapor', mainStock: 44 },
+        { code: 'P108', desc: 'Auriculares Bluetooth', mainStock: 68 },
+        { code: 'P109', desc: 'Batería de cocina', mainStock: 27 },
+        { code: 'P110', desc: 'Taladro percutor', mainStock: 14 },
+        { code: 'P111', desc: 'Juego de toallas', mainStock: 90 },
+        { code: 'P112', desc: 'Monitor 24"', mainStock: 33 },
+        { code: 'P113', desc: 'Teclado mecánico', mainStock: 55 },
+        { code: 'P114', desc: 'Mouse inalámbrico', mainStock: 72 }
+      ];
+
+      // Estado global
+      let selectedStore = { code: '0203', name: 'BABILON', m2: 210 };
+      let currentOrderItems = []; // { product, quantity }
+      let filteredProducts = [...PRODUCTS];
+
+      // Referencias DOM
+      const storeGrid = document.getElementById('storeGrid');
+      const modal = document.getElementById('orderModal');
+      const modalStoreName = document.getElementById('modalStoreName');
+      const modalStoreCode = document.getElementById('modalStoreCode');
+      const modalStoreM2 = document.getElementById('modalStoreM2');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const productTbody = document.getElementById('productTableBody');
+      const searchInput = document.getElementById('searchProductInput');
+      const orderItemsContainer = document.getElementById('orderItemsContainer');
+      const emptyOrderMsg = document.getElementById('emptyOrderMsg');
+      const orderTotalItems = document.getElementById('orderTotalItems');
+      const orderItemCount = document.getElementById('orderItemCount');
+      const submitOrderBtn = document.getElementById('submitOrderBtn');
+
+      // Event listeners para el nuevo modal de detalle
+      const cerrarModalBtns = document.querySelectorAll('#cerrarDetalleModalBtn, #cerrarDetalleModalFooterBtn');
+      cerrarModalBtns.forEach(btn => {
+        btn.addEventListener('click', cerrarDetalleModal);
+      });
+
+      const detalleModal = document.getElementById('detalleModal');
+      detalleModal.addEventListener('click', (e) => {
+        if (e.target === detalleModal) cerrarDetalleModal();
+      });
+
+      // Cerrar con tecla Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !detalleModal.classList.contains('hidden')) cerrarDetalleModal();
+      });
+
+      // ---------- FUNCIONES AUXILIARES ----------
+      function getStoreStock(productCode, storeCode) {
+        // Simula stock por tienda basado en código (variación pseudoaleatoria)
+        const base = PRODUCTS.find(p => p.code === productCode)?.mainStock || 30;
+        const hash = (storeCode.charCodeAt(0)+storeCode.charCodeAt(2)) % 15;
+        return Math.max(0, Math.floor(base * (0.4 + (hash/25)) ));
+      }
+
+      // Renderizar grilla de tiendas
+      function renderStoreGrid() {
+        let html = '';
+        Object.entries(STORES).forEach(([code, name]) => {
+          const m2 = M2_MAP[code] || 200;
+          html += `
+            <div class="store-card bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm hover:shadow-md border" data-store-code="${code}" data-store-name="${name}" data-m2="${m2}">
+              <div class="flex justify-between items-start">
+                <span class="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-500">${code}</span>
+                <span class="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded-full font-medium">${m2} m²</span>
+              </div>
+              <h3 class="font-bold text-slate-800 mt-2 text-lg truncate">${name}</h3>
+              <div class="flex items-center mt-3 text-xs text-slate-500">
+                <i class="fas fa-boxes mr-1"></i> 
+                <span>Stock local · clic para pedido</span>
+              </div>
+            </div>
+          `;
+        });
+        storeGrid.innerHTML = html;
+        
+        // Event listeners a tarjetas
+        document.querySelectorAll('.store-card').forEach(card => {
+          card.addEventListener('click', (e) => {
+            const code = card.dataset.storeCode;
+            const name = card.dataset.storeName;
+            const m2 = parseInt(card.dataset.m2);
+            selectedStore = { code, name, m2 };
+            openModal();
+          });
+        });
+      }
+
+      // Abrir modal y resetear
+      function openModal() {
+        modalStoreName.textContent = selectedStore.name;
+        modalStoreCode.textContent = `(${selectedStore.code})`;
+        modalStoreM2.textContent = `${selectedStore.m2} m²`;
+        
+        // Resetear búsqueda y pedido
+        searchInput.value = '';
+        filteredProducts = [...PRODUCTS];
+        currentOrderItems = [];
+        renderProductTable();
+        renderOrderSummary();
+        
+        modal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+      }
+
+      // Renderizar tabla productos (según filtro)
+      function renderProductTable() {
+        const query = searchInput.value.toLowerCase();
+        const filtered = PRODUCTS.filter(p => 
+          p.code.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query)
+        );
+        filteredProducts = filtered;
+        
+        if (filtered.length === 0) {
+          productTbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">No hay coincidencias</td></tr>`;
+          return;
+        }
+        
+        let rows = '';
+        filtered.forEach(prod => {
+          const storeStock = getStoreStock(prod.code, selectedStore.code);
+          rows += `
+            <tr class="hover:bg-indigo-50/30">
+              <td class="px-4 py-3 font-mono text-xs font-medium">${prod.code}</td>
+              <td class="px-4 py-3">${prod.desc}</td>
+              <td class="px-4 py-3 text-right font-medium ${storeStock < 10 ? 'text-amber-600' : 'text-slate-700'}">${storeStock}</td>
+              <td class="px-4 py-3 text-right">${prod.mainStock}</td>
+              <td class="px-4 py-3 text-center">
+                <input type="number" min="1" value="1" class="w-16 px-2 py-1 border border-slate-200 rounded-lg text-center text-sm" id="qty-${prod.code}">
+              </td>
+              <td class="px-4 py-3">
+                <button class="add-to-order-btn bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1" data-code="${prod.code}">
+                  <i class="fas fa-plus-circle"></i> Agregar
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+        productTbody.innerHTML = rows;
+        
+        // Asignar eventos a botones agregar
+        document.querySelectorAll('.add-to-order-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const code = btn.dataset.code;
+            const qtyInput = document.getElementById(`qty-${code}`);
+            let qty = parseInt(qtyInput.value);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            
+            const product = PRODUCTS.find(p => p.code === code);
+            const storeStock = getStoreStock(code, selectedStore.code);
+            
+            if (qty > storeStock) {
+              alert(`⚠️ Stock insuficiente en tienda. Disponible: ${storeStock}`);
+              return;
+            }
+            
+            addToOrder(product, qty);
+          });
+        });
+      }
+
+      function addToOrder(product, quantity) {
+        const existing = currentOrderItems.find(item => item.product.code === product.code);
+        if (existing) {
+          existing.quantity += quantity;
+        } else {
+          currentOrderItems.push({ product, quantity });
+        }
+        renderOrderSummary();
+        // Pequeña animación visual
+      }
+
+      function removeFromOrder(productCode) {
+        currentOrderItems = currentOrderItems.filter(item => item.product.code !== productCode);
+        renderOrderSummary();
+      }
+
+      function renderOrderSummary() {
+        if (currentOrderItems.length === 0) {
+          emptyOrderMsg.classList.remove('hidden');
+          orderItemsContainer.innerHTML = `<div class="text-center text-slate-400 text-sm py-8" id="emptyOrderMsg">
+              <i class="fas fa-box-open text-3xl mb-2 opacity-50"></i><p>Aún no hay productos</p><p class="text-xs">Agrega desde la izquierda</p></div>`;
+          orderTotalItems.textContent = '0';
+          orderItemCount.textContent = '0';
+          return;
+        }
+        emptyOrderMsg.classList.add('hidden');
+        
+        let itemsHtml = '';
+        let totalQty = 0;
+        currentOrderItems.forEach(item => {
+          totalQty += item.quantity;
+          itemsHtml += `
+            <div class="flex items-center justify-between bg-white p-3 rounded-xl shadow-sm border border-slate-100 order-item-enter">
+              <div class="flex-1 min-w-0">
+                <p class="font-medium text-sm truncate">${item.product.desc}</p>
+                <p class="text-xs text-slate-400">${item.product.code} · ${item.quantity} ud</p>
+              </div>
+              <button class="remove-item text-slate-400 hover:text-red-500 ml-2" data-code="${item.product.code}">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          `;
+        });
+        orderItemsContainer.innerHTML = itemsHtml;
+        orderTotalItems.textContent = totalQty;
+        orderItemCount.textContent = currentOrderItems.length;
+        
+        document.querySelectorAll('.remove-item').forEach(btn => {
+          btn.addEventListener('click', () => removeFromOrder(btn.dataset.code));
+        });
+      }
+
+      // Simular envío de pedido
+      function submitOrder() {
+        if (currentOrderItems.length === 0) {
+          alert('Agrega al menos un producto al pedido.');
+          return;
+        }
+        const itemsDesc = currentOrderItems.map(i => `${i.quantity}x ${i.product.desc}`).join('\n');
+        alert(`✅ Pedido solicitado para ${selectedStore.name}\n\n${itemsDesc}\n\nTotal artículos: ${currentOrderItems.reduce((s,i)=>s+i.quantity,0)}`);
+        // Resetear pedido
+        currentOrderItems = [];
+        renderOrderSummary();
+        // Opcional: cerrar modal
+        // closeModal();
+      }
+
+      // ----- NUEVAS FUNCIONES PARA EL MODAL DE DETALLE -----
+      function renderDetalleTabla(data) {
+        const tbody = document.getElementById('detalleTablaBody');
+        if (!data || data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-slate-400">No hay datos disponibles</td></tr>`;
+          return;
+        }
+        let html = '';
+        data.forEach(item => {
+          html += `
+            <tr class="hover:bg-indigo-50/30">
+              <td class="px-4 py-3 font-medium">${item.tienda}</td>
+              <td class="px-4 py-3 font-mono text-xs">${item.solpes}</td>
+              <td class="px-4 py-3 text-right">${item.bultos}</td>
+              <td class="px-4 py-3 text-right">${item.unidades}</td>
+            </tr>
+          `;
+        });
+        tbody.innerHTML = html;
+      }
+
+      // Datos mock (puedes personalizarlos)
+      const datosSolicitados = [
+        { tienda: 'BABILON', solpes: 'SOL-001', bultos: 3, unidades: 12 },
+        { tienda: 'BARALT', solpes: 'SOL-002', bultos: 5, unidades: 20 },
+        { tienda: 'CABIMAS', solpes: 'SOL-003', bultos: 2, unidades: 8 },
+        { tienda: 'PROPATRIA', solpes: 'SOL-004', bultos: 4, unidades: 16 },
+        { tienda: 'VALENCIA', solpes: 'SOL-005', bultos: 6, unidades: 24 }
+      ];
+
+      const datosProceso = [
+        { tienda: 'CABUDARE', solpes: 'P-101', bultos: 2, unidades: 5 },
+        { tienda: 'CATIA', solpes: 'P-102', bultos: 1, unidades: 3 },
+        { tienda: 'CRUZ VERDE', solpes: 'P-103', bultos: 4, unidades: 11 }
+      ];
+
+      const datosDespachados = [
+        { tienda: 'GUANARE', solpes: 'D-201', bultos: 3, unidades: 9 },
+        { tienda: 'GUACARA', solpes: 'D-202', bultos: 2, unidades: 7 },
+        { tienda: 'KAPITANA', solpes: 'D-203', bultos: 5, unidades: 18 }
+      ];
+
+      function mostrarDetalleDespachos(tipo) {
+        const modal = document.getElementById('detalleModal');
+        const tituloElem = document.getElementById('detalleModalTitulo');
+        let titulo = '';
+        let datos = [];
+
+        switch (tipo) {
+          case 'total':
+            titulo = 'Pedidos Solicitados';
+            datos = datosSolicitados;
+            break;
+          case 'tiendas':
+            titulo = 'Pedidos en Proceso';
+            datos = datosProceso;
+            break;
+          case 'deptos':
+            titulo = 'Pedidos Despachados';
+            datos = datosDespachados;
+            break;
+          default:
+            titulo = 'Detalle de pedidos';
+            datos = [];
+        }
+
+        tituloElem.textContent = titulo;
+        renderDetalleTabla(datos);
+        modal.classList.remove('hidden');
+      }
+      
+      // ---------- LÓGICA MODAL CONCILIACIÓN ----------
+      const conciliacionModal = document.getElementById('conciliacionModal');
+      const cerrarConciliacionBtns = document.querySelectorAll('#cerrarConciliacionBtn, #cerrarConciliacionFooterBtn');
+      const cardConciliacion = document.getElementById('cardConciliacion');
+      const conciliacionTablaBody = document.getElementById('conciliacionTablaBody');
+
+      // Datos de ejemplo (diferencias reales)
+      const diferenciasConciliacion = [
+        { tienda: 'BABILON', solpe: 'SOL-001', bultosSol: 5, bultosRec: 3, estado: 'Incompleto' },
+        { tienda: 'BARALT', solpe: 'SOL-002', bultosSol: 4, bultosRec: 4, estado: 'Ok' },
+        { tienda: 'CABIMAS', solpe: 'SOL-003', bultosSol: 8, bultosRec: 5, estado: 'Incompleto' },
+        { tienda: 'PROPATRIA', solpe: 'SOL-004', bultosSol: 2, bultosRec: 2, estado: 'Ok' },
+        { tienda: 'VALENCIA', solpe: 'SOL-005', bultosSol: 6, bultosRec: 0, estado: 'No recibido' },
+        { tienda: 'CABUDARE', solpe: 'P-101', bultosSol: 3, bultosRec: 2, estado: 'Parcial' },
+        { tienda: 'CATIA', solpe: 'P-102', bultosSol: 1, bultosRec: 1, estado: 'Ok' },
+        { tienda: 'CRUZ VERDE', solpe: 'P-103', bultosSol: 4, bultosRec: 6, estado: 'Sobrante' }
+      ];
+
+      function renderConciliacionTabla() {
+        let html = '';
+        diferenciasConciliacion.forEach(item => {
+          const diff = item.bultosRec - item.bultosSol;
+          const diffClase = diff < 0 ? 'text-red-600' : (diff > 0 ? 'text-emerald-600' : 'text-slate-500');
+          const diffTexto = (diff > 0 ? `+${diff}` : diff);
+          let estadoBadge = '';
+          if (item.estado === 'Ok') estadoBadge = '<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs">Ok</span>';
+          else if (item.estado === 'Incompleto') estadoBadge = '<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs">Incompleto</span>';
+          else if (item.estado === 'No recibido') estadoBadge = '<span class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full text-xs">No recibido</span>';
+          else if (item.estado === 'Parcial') estadoBadge = '<span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-xs">Parcial</span>';
+          else if (item.estado === 'Sobrante') estadoBadge = '<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs">Sobrante</span>';
+          
+          html += `
+            <tr class="hover:bg-slate-50">
+              <td class="px-4 py-3 font-medium">${item.tienda}</td>
+              <td class="px-4 py-3 font-mono text-xs">${item.solpe}</td>
+              <td class="px-4 py-3 text-right">${item.bultosSol}</td>
+              <td class="px-4 py-3 text-right">${item.bultosRec}</td>
+              <td class="px-4 py-3 text-center font-mono ${diffClase}">${diffTexto}</td>
+              <td class="px-4 py-3">${estadoBadge}</td>
+            </tr>
+          `;
+        });
+        conciliacionTablaBody.innerHTML = html;
+      }
+
+      function abrirModalConciliacion() {
+        renderConciliacionTabla();
+        conciliacionModal.classList.remove('hidden');
+      }
+
+      function cerrarModalConciliacion() {
+        conciliacionModal.classList.add('hidden');
+      }
+
+      // Eventos del modal de conciliación
+      cardConciliacion.addEventListener('click', abrirModalConciliacion);
+      cerrarConciliacionBtns.forEach(btn => {
+        btn.addEventListener('click', cerrarModalConciliacion);
+      });
+      conciliacionModal.addEventListener('click', (e) => {
+        if (e.target === conciliacionModal) cerrarModalConciliacion();
+      });
+
+      function cerrarDetalleModal() {
+        const modal = document.getElementById('detalleModal');
+        modal.classList.add('hidden');
+        document.getElementById('detalleTablaBody').innerHTML = ''; // limpia tabla
+      }
+
+      // ---------- EVENTOS GENERALES ----------
+      renderStoreGrid();
+      
+      // Tarjetas despachos click
+      document.getElementById('cardDespachosTotal').addEventListener('click', ()=> mostrarDetalleDespachos('total'));
+      document.getElementById('cardTiendasDespacho').addEventListener('click', ()=> mostrarDetalleDespachos('tiendas'));
+      document.getElementById('cardDepartamentos').addEventListener('click', ()=> mostrarDetalleDespachos('deptos'));
+      
+      // Modal cerrar
+      closeModalBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      
+      // Búsqueda en modal
+      searchInput.addEventListener('input', renderProductTable);
+      
+      // Botón solicitar
+      submitOrderBtn.addEventListener('click', submitOrder);
+      
+      // Cerrar con Escape
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal(); });
+      
+      // Inicializar totales visuales (mock)
+      document.getElementById('totalDespachos').textContent = '24';
+      document.getElementById('tiendasConDespacho').textContent = '12';
+      
+      // Pequeño ajuste para stock inicial de tabla al abrir (se llama en openModal)
+    })();
+  </script>
+</body>
+</html>

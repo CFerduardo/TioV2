@@ -1,0 +1,111 @@
+CREATE DATABASE TIO2
+---------------------------------------------------------------------------------------------------------
+-- Table: public.historico_actividad
+
+-- DROP TABLE IF EXISTS public.historico_actividad;
+
+CREATE TABLE IF NOT EXISTS public.historico_actividad
+(
+    id integer NOT NULL DEFAULT nextval('historico_actividad_id_seq'::regclass),
+    cedula character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    nombre_usuario character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    departamento character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    accion text COLLATE pg_catalog."default" NOT NULL,
+    modulo character varying(50) COLLATE pg_catalog."default",
+    fecha_registro timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT historico_actividad_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.historico_actividad
+    OWNER to postgres;
+-- Index: idx_historico_cedula
+
+-- DROP INDEX IF EXISTS public.idx_historico_cedula;
+
+CREATE INDEX IF NOT EXISTS idx_historico_cedula
+    ON public.historico_actividad USING btree
+    (cedula COLLATE pg_catalog."default" ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+-- Index: idx_historico_fecha
+
+-- DROP INDEX IF EXISTS public.idx_historico_fecha;
+
+CREATE INDEX IF NOT EXISTS idx_historico_fecha
+    ON public.historico_actividad USING btree
+    (fecha_registro ASC NULLS LAST)
+    WITH (fillfactor=100, deduplicate_items=True)
+    TABLESPACE pg_default;
+---------------------------------------------------------------------------------------------------------
+-- Table: public.recepcion_tienda
+
+-- DROP TABLE IF EXISTS public.recepcion_tienda;
+
+CREATE TABLE IF NOT EXISTS public.recepcion_tienda
+(
+    documento character varying(50) COLLATE pg_catalog."default",
+    fecha timestamp without time zone,
+    tienda character varying(100) COLLATE pg_catalog."default",
+    deposito_destino character varying(50) COLLATE pg_catalog."default",
+    proveedor character varying(255) COLLATE pg_catalog."default",
+    articulo character varying(100) COLLATE pg_catalog."default",
+    descripcion text COLLATE pg_catalog."default",
+    cantidad numeric(18,4),
+    impuesto_1 numeric(18,4),
+    impuesto_2 numeric(18,4),
+    impuesto_3 numeric(18,4),
+    monto numeric(18,8),
+    subtotal numeric(18,8),
+    costo numeric(18,8)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.recepcion_tienda
+    OWNER to postgres;
+---------------------------------------------------------------------------------------------------------
+-- Table: public.recepciones_yaguara
+
+-- DROP TABLE IF EXISTS public.recepciones_yaguara;
+
+CREATE TABLE IF NOT EXISTS public.recepciones_yaguara
+(
+    documento character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    fecha date NOT NULL,
+    factura character varying(50) COLLATE pg_catalog."default",
+    depositoorigen character varying(50) COLLATE pg_catalog."default",
+    proveedor character varying(150) COLLATE pg_catalog."default",
+    articulo character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    descripcionarticulo character varying(255) COLLATE pg_catalog."default",
+    cantidad integer,
+    costo numeric(18,4),
+    subtotal numeric(18,2),
+    monto numeric(18,2)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.recepciones_yaguara
+    OWNER to postgres;
+---------------------------------------------------------------------------------------------------------
+-- Table: public.usuarios
+
+-- DROP TABLE IF EXISTS public.usuarios;
+
+CREATE TABLE IF NOT EXISTS public.usuarios
+(
+    cedula character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    password character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    usuario character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    descripcion character varying(100) COLLATE pg_catalog."default",
+    departamento character varying(15) COLLATE pg_catalog."default" NOT NULL DEFAULT 'SIN ASIGNAR'::character varying,
+    CONSTRAINT usuarios_pkey PRIMARY KEY (cedula),
+    CONSTRAINT usuarios_usuario_key UNIQUE (usuario)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.usuarios
+    OWNER to postgres;
