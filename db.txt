@@ -1,0 +1,4 @@
+usuario admin y clave, base de datos 
+
+CREATE USER c_tioAdmin WITH PASSWORD 'Pssw~rd2026';
+CREATE DATABASE "TioV2" OWNER c_tioAdmin;
